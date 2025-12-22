@@ -2,11 +2,17 @@
 
 一个 **Cloudflare IP 优选**工具：用**递进式蒙特卡罗 + 多头分散搜索（multi-head + beam）**在更少探测次数下，从 IPv4/IPv6 网段里找到更快/更稳定的 IP。
 
+示例优选域名：`hao.haohaohao.xyz`
+
 IPv4 和 IPv6 的推荐命令分别为
 ```bash
 go run ./cmd/mcis --budget 500 --concurrency 50 --heads 8 --beam 32 -v --out text --sni example.com --host-header example.com --cidr-file .\ipv4cidr.txt
 go run ./cmd/mcis --budget 2000 --concurrency 100 --heads 8 --beam 32 -v --out text --sni example.com --host-header example.com --cidr-file .\ipv6-cidr.txt
 ```
+
+注意，本项目使用的是 https 真返回测速，所以显示延迟会是其它工具的结果加上一个固定值，使用起来是一样的。使用你的网站作为 sni 和 host，可以保证优选出来的 ip 当前在你的区域一定对你的网站生效，如有特殊需求还可自定义 path。
+
+推荐在晚高峰时段运行测试，因为本项目采用不同 IP 之间的延迟差异来缩小查找范围，差异越小，收敛越困难。
 
 ## 特色
 
