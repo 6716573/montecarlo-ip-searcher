@@ -22,4 +22,4 @@ jobs:
         goos: ${{ matrix.goos }}
         goarch: ${{ matrix.goarch }}
         project_path: "./cmd/mcis"
-        extra_files: LICENSE readme.md ipv4cidr.txt ipv6-cidr.txt
+        extra_files: LICENSE readme.md ipv4cidr.txt ipv6cidr.txt
