@@ -91,9 +91,10 @@ func (a *ArmNode) Update(success bool, latencyMS float64, timeoutMS float64) {
 		// Update sum of squared differences (for variance estimation)
 		a.SumLatency += latencyMS
 		if a.Successes > 1 {
-			// Welford's online algorithm for variance
+			// Welford's online algorithm for variance with precision weighting
+			// For precision-weighted mean, we need to include the weight adjustment factor
 			delta := latencyMS - oldMu
-			a.SumSqDiff += delta * (latencyMS - a.Mu)
+			a.SumSqDiff += delta * (latencyMS - a.Mu) * oldLambda / a.Lambda
 		}
 
 		// Update Gamma parameters for precision
